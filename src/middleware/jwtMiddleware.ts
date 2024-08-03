@@ -1,9 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
 import { expressjwt } from 'express-jwt';
-
+import jwt from 'jsonwebtoken';
+import 'dotenv/config' ;
 // Middleware function to validate JWT
 const jwtValidation = expressjwt({
-  secret: process.env.JWT_SECRET || 'd3b07384d113edec49eaa6238ad5ff00b204e9800998ecf8427e',
+  secret: process.env.JWT_SECRET!,
   algorithms: ['HS256'],
   credentialsRequired: true,
 }).unless({
@@ -18,4 +19,15 @@ const jwtErrorHandler = (err: any, req: Request, res: Response, next: NextFuncti
   next(err);
 };
 
-export { jwtValidation, jwtErrorHandler };
+
+// Generate JWT tokens
+const accessTokenSecret = process.env.JWT_SECRET!;
+const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET!;
+
+const generateTokens = (user: any) => {
+  const accessToken = jwt.sign({ id: user._id, username: user.username }, accessTokenSecret, { expiresIn: process.env.ExpiredAccessTokenTimeout});
+  const refreshToken = jwt.sign({ id: user._id }, refreshTokenSecret, { expiresIn: process.env.ExpiredRefreshTokenTimeout });
+  return { accessToken, refreshToken };
+};
+
+export { jwtValidation, jwtErrorHandler,generateTokens};
