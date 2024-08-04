@@ -16,6 +16,12 @@ class UserService {
     const isPasswordValid = await bcrypt.compare(password, user.password);
     return isPasswordValid ? user : null;
   }
+
+
+  async findById(id: string): Promise<UserType | null> {
+    const user = await userRepository.findUserById(id);
+    return user;
+  }
 }
 
 export default new UserService();

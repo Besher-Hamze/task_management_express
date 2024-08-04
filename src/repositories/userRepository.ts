@@ -9,6 +9,9 @@ class UserRepository {
   async createUser(user: UserType): Promise<UserType> {
     return User.create(user);
   }
+  async findUserById(id: string): Promise<UserType | null> {
+    return User.findById({ id });
+  }
 }
 
 export default new UserRepository();

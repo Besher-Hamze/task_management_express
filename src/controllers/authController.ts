@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import userService from '../services/userService';
 import { User as UserType } from '../types/userTypes';
 import { generateTokens } from '../middleware/jwtMiddleware'
+import jwt from 'jsonwebtoken';
 export const register = async (req: Request, res: Response) => {
   const { username, password } = req.body as UserType;
   try {
@@ -26,3 +27,28 @@ export const login = async (request: Request, reply: Response) => {
     reply.status(500).send({ message: err.message });
   }
 };
+// export const refreshToken = async (req: Request, res: Response) => {
+//   const { refreshToken } = req.body;
+//   if (!refreshToken) {
+//     return res.status(401).json({ message: 'Refresh token required' });
+//   }
+
+//   try {
+//     // Verify refresh token
+//     jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET!, async (err: any, user: any) => {
+//       if (err) return res.status(403).json({ message: 'Invalid refresh token' });
+
+//       // Find user and check if the token matches
+//       const dbUser = await User.findById(user.id);
+//       if (!dbUser || dbUser.refreshToken !== refreshToken) {
+//         return res.status(403).json({ message: 'Invalid refresh token' });
+//       }
+
+//       // Generate new access token
+//       const newAccessToken = jwt.sign({ id: dbUser._id, username: dbUser.username }, accessTokenSecret, { expiresIn: '15m' });
+//       res.json({ accessToken: newAccessToken });
+//     });
+//   } catch (err) {
+//     res.status(500).json({ message: 'Error refreshing token', error: err.message });
+//   }
+// };
