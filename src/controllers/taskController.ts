@@ -22,8 +22,9 @@ export const createTask = async (request: Request, reply: Response) => {
 };
 
 export const getTaskById = async (request: Request, reply: Response) => {
-  const { id } = request.params as { id: string };
+  const { id } = request.body as { id: string };
   try {
+    console.log(id);
     const task = await taskService.getTaskById(id);
     if (!task) {
       reply.status(404).send({ message: 'Task not found' });

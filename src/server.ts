@@ -6,6 +6,7 @@ import authRoutes from './routes/authRoutes';
 import helmet from 'helmet';
 import bodyParser from 'body-parser';
 import { jwtValidation ,jwtErrorHandler} from './middleware/jwtMiddleware'; // Import the JWT validation middleware
+import departmentRoutes from './routes/departmentRoutes';
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ app.use(jwtErrorHandler)
 // Register Routes
 app.use('/api/tasks', taskRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/departments', departmentRoutes);
 
 // Connect to MongoDB
 const mongoUri = process.env.MONGO_URI!;
