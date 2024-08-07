@@ -4,6 +4,7 @@ import connectDB from './utils/database';
 import taskRoutes from './routes/taskRoutes';
 import authRoutes from './routes/authRoutes';
 import helmet from 'helmet';
+import cors from 'cors';
 import bodyParser from 'body-parser';
 import { jwtValidation ,jwtErrorHandler} from './middleware/jwtMiddleware'; // Import the JWT validation middleware
 import departmentRoutes from './routes/departmentRoutes';
@@ -15,6 +16,7 @@ const app = express();
 // Middleware setup
 app.use(helmet());
 app.use(bodyParser.json());
+app.use(cors());
 
 // JWT Middleware
 app.use(jwtValidation);

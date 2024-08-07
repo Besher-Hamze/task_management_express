@@ -27,6 +27,23 @@ export const login = async (request: Request, reply: Response) => {
     reply.status(500).send({ message: err.message });
   }
 };
+export const getUsers = async (request: Request, reply: Response) => {
+  try {
+    const users = await userService.getAllUser();
+    reply.status(200).send({users:users});
+    } catch (err: any) {
+    reply.status(500).send({ message: err.message });
+  }
+};
+export const getUserById = async (request: Request, reply: Response) => {
+  const { id } = request.body ;
+  try {
+    const users = await userService.findById(id);
+    reply.status(200).send({users:users});
+    } catch (err: any) {
+    reply.status(500).send({ message: err.message });
+  }
+};
 // export const refreshToken = async (req: Request, res: Response) => {
 //   const { refreshToken } = req.body;
 //   if (!refreshToken) {

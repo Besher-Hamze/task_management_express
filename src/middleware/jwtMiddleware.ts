@@ -8,7 +8,7 @@ const jwtValidation = expressjwt({
   algorithms: ['HS256'],
   credentialsRequired: true,
 }).unless({
-    path: ['/api/auth/login', '/api/auth/register'], // Exclude these routes from JWT validation 
+    path: ['/api/auth/login', '/api/auth/register','/api/auth/id'], // Exclude these routes from JWT validation 
 });
 
 // Error handler for unauthorized access

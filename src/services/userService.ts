@@ -22,6 +22,10 @@ class UserService {
     const user = await userRepository.findUserById(id);
     return user;
   }
+  async getAllUser() : Promise<UserType[]> {
+    const users=await userRepository.findAllUser();
+    return users;
+  }
 }
 
 export default new UserService();
