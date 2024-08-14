@@ -26,6 +26,11 @@ class UserService {
     const users=await userRepository.findAllUser();
     return users;
   }
+
+  async updateUser(_id:string,userData:Partial<UserType>): Promise<UserType| null> {
+     return await userRepository.updateUser(_id,userData);
+     
+  }
 }
 
 export default new UserService();

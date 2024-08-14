@@ -3,6 +3,7 @@ import userService from '../services/userService';
 import { User as UserType } from '../types/userTypes';
 import { generateTokens } from '../middleware/jwtMiddleware'
 import jwt from 'jsonwebtoken';
+import userRepository from '../repositories/userRepository';
 export const register = async (req: Request, res: Response) => {
   const { username, password } = req.body as UserType;
   try {
@@ -44,7 +45,18 @@ export const getUserById = async (request: Request, reply: Response) => {
     reply.status(500).send({ message: err.message });
   }
 };
-// export const refreshToken = async (req: Request, res: Response) => {
+export const updateUser = async (request: Request, reply: Response) => {
+  const { id, ...userData } = request.body as { id: string } & Partial<UserType>;
+  try {
+    const updatedUser = await userRepository.updateUser(id, userData);
+    if (!updatedUser) {
+      reply.status(404).send({ message: 'User not found' });
+    }
+    reply.status(200).send({message:"User updated successfully"});
+  } catch (err: any) {
+    reply.status(500).send({ message: err.message });
+  }
+};// export const refreshToken = async (req: Request, res: Response) => {
 //   const { refreshToken } = req.body;
 //   if (!refreshToken) {
 //     return res.status(401).json({ message: 'Refresh token required' });
